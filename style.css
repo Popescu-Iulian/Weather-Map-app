@@ -25,3 +25,8 @@ body {
 	color: red;
 	font-weight: bold;
 }
+
+#icon {
+	width: 100px;
+	height: 100px;
+}

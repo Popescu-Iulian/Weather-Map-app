@@ -12,6 +12,39 @@
 		<title>Weather Map App</title>
 	</head>
 	<body>
-		<div id="container">aici vom avea toate datele meteo</div>
+		<div class="container">
+			<div class="weather-information">
+				<h3 class="status">Weather Map App</h3>
+			</div>
+			<div class="content-wrapper">
+				<div class="icon-wrapper">
+					<div class="weather-icon">
+						<img src="" id="icon"></img>
+					</div>
+					<h5></h5>
+				</div>
+				<div class="detail-section">
+					<div class="detail">
+						<div class="title">Wind</div>
+						<div class="value"></div>
+					</div>
+					<div class="detail bordered">
+						<div class="title">Temperature</div>
+						<div class="value"></div>
+					</div>
+					<div class="detail">
+						<div class="title">Humidity</div>
+						<div class="value"></div>
+					</div>
+				</div>
+				<div class="city-search-container">
+					<input
+						type="text"
+						class="city-search"
+						placeholder="Enter Location..."
+					/>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
