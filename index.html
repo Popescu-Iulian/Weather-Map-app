@@ -7,8 +7,13 @@
 			href="https://fonts.googleapis.com/css?family=Raleway:400,600,700&display=swap"
 			rel="stylesheet"
 		/>
+		<!-- <script
+			async
+			defer
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf8nujlXNWNfGfaEjc4BLRNAfc0JvjUGU&callback=initMap"
+		></script> -->
 		<link rel="stylesheet" href="style.css" />
-		<script src="script.js" defer></script>
+		<script defer src="script.js"></script>
 		<title>Weather Map App</title>
 	</head>
 	<body>
@@ -19,7 +24,7 @@
 			<div class="content-wrapper">
 				<div class="icon-wrapper">
 					<div class="weather-icon">
-						<img src="" id="icon"></img>
+						<img src="" id="icon" />
 					</div>
 					<h5></h5>
 				</div>
@@ -43,8 +48,13 @@
 						class="city-search"
 						placeholder="Enter Location..."
 					/>
+					<button onclick="getWeatherMap()">Afiseaza vremea</button>
+				</div>
+				<div class="prognoza">
+					<button>Afiseaza prognoza</button>
 				</div>
 			</div>
+			<div id="map">Google map</div>
 		</div>
 	</body>
 </html>
