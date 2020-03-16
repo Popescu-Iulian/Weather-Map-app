@@ -16,10 +16,11 @@
 		<script defer src="script.js"></script>
 		<title>Weather Map App</title>
 	</head>
-	<body>
+	<body onload="getWeather()">
 		<div class="container">
 			<div class="weather-information">
 				<h3 class="status">Weather Map App</h3>
+				<p class="location"></p>
 			</div>
 			<div class="content-wrapper">
 				<div class="icon-wrapper">
@@ -31,15 +32,15 @@
 				<div class="detail-section">
 					<div class="detail">
 						<div class="title">Wind</div>
-						<div class="value"></div>
+						<div class="value wind"></div>
 					</div>
 					<div class="detail bordered">
 						<div class="title">Temperature</div>
-						<div class="value"></div>
+						<div class="value temperature"></div>
 					</div>
 					<div class="detail">
 						<div class="title">Humidity</div>
-						<div class="value"></div>
+						<div class="value humidity"></div>
 					</div>
 				</div>
 				<div class="city-search-container">
@@ -56,7 +57,7 @@
 			</div>
 			<div id="map">
 				<p class="displaimer">
-					The map doesen't always show because the app is not connected to a
+					The map doesen't always load because the app is not connected to a
 					billed Google API account.
 				</p>
 			</div>
