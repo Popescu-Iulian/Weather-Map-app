@@ -48,7 +48,6 @@ class Weather {
 }
 
 /////////////////// ui ///////////////////
-
 const userlocation = document.querySelector('.location');
 const humidity = document.querySelector('.humidity');
 const wind = document.querySelector('.wind');
