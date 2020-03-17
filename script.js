@@ -1,130 +1,88 @@
-
-/////////////////// storage ///////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////STORAGE/////////////////////////////////
 class Storage {
   constructor() {
-    this.city
-    this.country
-    this.defaultCity = 'Paris'
+    this.city;
   }
 
   getLocationData() {
-    localStorage.getItem('city') === null
-      ? (this.city = this.defaultCity)
-      : (this.city = localStorage.getItem('city'))
-
-    return {
-      city: this.city,
+    if (localStorage.getItem('city') === null) {
+      this.city = 'Bucharest';
+      // poate ii dai valoarea din geolocalizare
+    } else {
+      this.city = localStorage.getItem('city');
     }
+
+    return this.city;
   }
 
   setLocationData(city) {
-    localStorage.setItem('city', city)
+    localStorage.setItem('city', city);
   }
 }
 
-/////////////////// weather ///////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////WEATHER/////////////////////////////////
 class Weather {
   constructor(city) {
-    this.apiKey = '9a69dfc035a5bc26f2d310c17aecd706'
-    this.city = city
+    this.apiKey = '9a69dfc035a5bc26f2d310c17aecd706';
+    this.city = city;
   }
 
-  //fetch weather from api
   async getWeather() {
-    const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&APPID=${this.apiKey}&units=metric`
-    )
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&appid=${this.apiKey}&units=metric`);
 
-    const responseData = await response.json()
-    console.log(responseData)
+    const responseData = await response.json();
 
-    return responseData
+    return responseData;
   }
 
-  //change location
   changeLocation(city) {
-    this.city = city
+    this.city = city;
   }
 }
 
-/////////////////// ui ///////////////////
-const userlocation = document.querySelector('.location');
-const humidity = document.querySelector('.humidity');
-const wind = document.querySelector('.wind');
-
+///////////////////////////////////////////////////////////////
+///////////////////////UI//////////////////////////////////////
 class UI {
   constructor() {
-    this.location = userlocation
-    this.humidity = humidity
-    this.wind = wind
+    this.location = document.querySelector('#location');
+    this.details = document.querySelector('#details');
+    this.icon = document.querySelector('#icon');
+    this.humidity = document.querySelector('#humidity');
+    this.temperature = document.querySelector('#temperature');
+    this.wind = document.querySelector('#wind');
   }
 
   paint(weather) {
-    this.location.textContent = weather.name
-    this.humidity.textContent = `Relative Humidity: ${weather.main.humidity}`
-    this.wind.textContent = `Wind Speed: ${weather.wind.speed}meters/sec`
+    this.location.textContent = weather.name;
+    this.details.textContent = weather.weather[0].description;
+    this.icon.setAttribute('src', `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`);
+    this.humidity.textContent = `Humidity: ${weather.main.humidity}%`;
+    this.temperature.textContent = `Temperature: ${weather.main.temp} °C`;
+    this.wind.textContent = `Wind Speed: ${weather.wind.speed} m/s`;
   }
 }
 
-/////////////////// app ///////////////////
-// initialise the Storage object
-const storage = new Storage()
+///////////////////////////////////////////////////////////////
+///////////////////////APP/////////////////////////////////////
+const storage = new Storage();
+const weatherLocation = storage.getLocationData();
+const weather = new Weather(weatherLocation);
+const ui = new UI();
 
-//get stored location data
-const weatherLocation = storage.getLocationData()
+function changeWeather() {
+  const input = document.querySelector('input').value;
 
-//init weather object
-const weather = new Weather(weatherLocation.city)
+  weather.changeLocation(input);
 
-//init ui
-const ui = new UI()
+  storage.setLocationData(input);
 
-//get weather on dom load
-// document.addEventListener('DOMContentLoaded', getWeather)
-
-// //change location event
-// document.getElementById('w-change-btn').addEventListener('click', e => {
-//   const city = document.getElementById('city').value
-//   const country = document.getElementById('country').value
-
-//   //change location
-//   weather.changeLocation(city, country)
-
-//   //set location in local storage
-//   storage.setLocationData(city, country)
-
-//   //get and display weather
-//   getWeather()
-
-//   //close modal
-//   $('#locModal').modal('hide')
-// })
-
-function getWeather() {
-  weather
-    .getWeather()
-    .then(results => {
-      ui.paint(results)
-    })
-    .catch(err => console.log(err))
+  getWeather();
 }
 
-
-
-
-
-
-
-
-// this.apiKey = '9a69dfc035a5bc26f2d310c17aecd706';
-
-
-
-// function initMap() {
-//   let mapId = document.getElementById('map');
-//   // The location of Uluru
-//   var location = { lat: 48.856613, lng: 2.352222 };
-//   // The map, centered at Uluru
-//   var map = new google.maps.Map(
-//     mapId, { zoom: 12, center: location });
-// }
+function getWeather() {
+  weather.getWeather()
+    .then(results => ui.paint(results))
+    .catch(err => console.error(err))
+}
