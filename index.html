@@ -10,19 +10,19 @@
 		></script> -->
 		<link rel="stylesheet" href="style.css" />
 		<script defer src="script.js"></script>
-		<title>Document</title>
+		<title>Weather Map App</title>
 	</head>
 	<body onload="getWeather()">
 		<h4 id="location"></h4>
 		<img id="icon" alt="today weather picture" />
-		<p id="details">clear sky</p>
+		<p id="description"></p>
 		<br />
-		<p id="humidity">Humidity:</p>
-		<p id="temperature">Temperature:</p>
-		<p id="wind">Wind:</p>
+		<p id="humidity"></p>
+		<p id="temperature"></p>
+		<p id="wind"></p>
 		<input type="text" />
-		<button onclick="changeWeather()">Show weather</button>
-		<button onclick="showForecast()">Show forecast</button>
+		<button onclick="changeUserLocation()">Show weather</button>
+		<button onclick="showWeatherForecast()">Show forecast</button>
 		<div id="map">
 			<p class="displaimer">
 				The map doesen't always load because the app is not connected to a

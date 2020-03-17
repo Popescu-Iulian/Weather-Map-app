@@ -1,6 +1,12 @@
-///////////////////////////////////////////////////////////////
-///////////////////////STORAGE/////////////////////////////////
-class Storage {
+const LOCATION = document.querySelector('#location');
+const ICON = document.querySelector('#icon');
+const DESCRIPTION = document.querySelector('#description');
+const HUMIDITY = document.querySelector('#humidity');
+const TEMP = document.querySelector('#temperature');
+const WIND = document.querySelector('#wind');
+const LOCATION_INPUT = document.querySelector('input');
+
+class LocalStorage {
   constructor() {
     this.city;
   }
@@ -8,7 +14,7 @@ class Storage {
   getLocationData() {
     if (localStorage.getItem('city') === null) {
       this.city = 'Bucharest';
-      // poate ii dai valoarea din geolocalizare
+      // poate ii dai valoarea din geolocalizare (nested if)
     } else {
       this.city = localStorage.getItem('city');
     }
@@ -21,20 +27,18 @@ class Storage {
   }
 }
 
-///////////////////////////////////////////////////////////////
-///////////////////////WEATHER/////////////////////////////////
-class Weather {
+class GetWeatherData {
   constructor(city) {
     this.apiKey = '9a69dfc035a5bc26f2d310c17aecd706';
     this.city = city;
   }
 
-  async getWeather() {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&appid=${this.apiKey}&units=metric`);
+  async getLocationWeather() {
+    const WEATHER_RESPONSE = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&appid=${this.apiKey}&units=metric`);
 
-    const responseData = await response.json();
+    const WEATHER_RESPONSE_DATA = await WEATHER_RESPONSE.json();
 
-    return responseData;
+    return WEATHER_RESPONSE_DATA;
   }
 
   changeLocation(city) {
@@ -42,19 +46,17 @@ class Weather {
   }
 }
 
-///////////////////////////////////////////////////////////////
-///////////////////////UI//////////////////////////////////////
-class UI {
+class DisplayWeatherData {
   constructor() {
-    this.location = document.querySelector('#location');
-    this.details = document.querySelector('#details');
-    this.icon = document.querySelector('#icon');
-    this.humidity = document.querySelector('#humidity');
-    this.temperature = document.querySelector('#temperature');
-    this.wind = document.querySelector('#wind');
+    this.location = LOCATION;
+    this.details = DESCRIPTION;
+    this.icon = ICON;
+    this.humidity = HUMIDITY;
+    this.temperature = TEMP;
+    this.wind = WIND;
   }
 
-  paint(weather) {
+  displayWeather(weather) {
     this.location.textContent = weather.name;
     this.details.textContent = weather.weather[0].description;
     this.icon.setAttribute('src', `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`);
@@ -64,25 +66,21 @@ class UI {
   }
 }
 
-///////////////////////////////////////////////////////////////
-///////////////////////APP/////////////////////////////////////
-const storage = new Storage();
-const weatherLocation = storage.getLocationData();
-const weather = new Weather(weatherLocation);
-const ui = new UI();
+const LOCAL_STORAGE = new LocalStorage();
+const USER_LOCATION = LOCAL_STORAGE.getLocationData();
+const LOCATION_WEATHER = new GetWeatherData(USER_LOCATION);
+const DISPLAY_WEATHER = new DisplayWeatherData();
 
-function changeWeather() {
-  const input = document.querySelector('input').value;
+function changeUserLocation() {
+  LOCATION_WEATHER.changeLocation(LOCATION_INPUT.value);
 
-  weather.changeLocation(input);
-
-  storage.setLocationData(input);
+  LOCAL_STORAGE.setLocationData(LOCATION_INPUT.value);
 
   getWeather();
 }
 
 function getWeather() {
-  weather.getWeather()
-    .then(results => ui.paint(results))
+  LOCATION_WEATHER.getLocationWeather()
+    .then(results => DISPLAY_WEATHER.displayWeather(results))
     .catch(err => console.error(err))
 }
