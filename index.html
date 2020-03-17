@@ -3,10 +3,6 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link
-			href="https://fonts.googleapis.com/css?family=Raleway:400,600,700&display=swap"
-			rel="stylesheet"
-		/>
 		<!-- <script
 			async
 			defer
@@ -14,53 +10,24 @@
 		></script> -->
 		<link rel="stylesheet" href="style.css" />
 		<script defer src="script.js"></script>
-		<title>Weather Map App</title>
+		<title>Document</title>
 	</head>
 	<body onload="getWeather()">
-		<div class="container">
-			<div class="weather-information">
-				<h3 class="status">Weather Map App</h3>
-				<p class="location"></p>
-			</div>
-			<div class="content-wrapper">
-				<div class="icon-wrapper">
-					<div class="weather-icon">
-						<img src="" id="icon" />
-					</div>
-					<h5></h5>
-				</div>
-				<div class="detail-section">
-					<div class="detail">
-						<div class="title">Wind</div>
-						<div class="value wind"></div>
-					</div>
-					<div class="detail bordered">
-						<div class="title">Temperature</div>
-						<div class="value temperature"></div>
-					</div>
-					<div class="detail">
-						<div class="title">Humidity</div>
-						<div class="value humidity"></div>
-					</div>
-				</div>
-				<div class="city-search-container">
-					<input
-						type="text"
-						class="city-search"
-						placeholder="Enter Location..."
-					/>
-					<button onclick="getWeatherMap()">Afiseaza vremea</button>
-				</div>
-				<div class="prognoza">
-					<button>Afiseaza prognoza</button>
-				</div>
-			</div>
-			<div id="map">
-				<p class="displaimer">
-					The map doesen't always load because the app is not connected to a
-					billed Google API account.
-				</p>
-			</div>
+		<h4 id="location"></h4>
+		<img id="icon" alt="today weather picture" />
+		<p id="details">clear sky</p>
+		<br />
+		<p id="humidity">Humidity:</p>
+		<p id="temperature">Temperature:</p>
+		<p id="wind">Wind:</p>
+		<input type="text" />
+		<button onclick="changeWeather()">Show weather</button>
+		<button onclick="showForecast()">Show forecast</button>
+		<div id="map">
+			<p class="displaimer">
+				The map doesen't always load because the app is not connected to a
+				billed Google API account.
+			</p>
 		</div>
 	</body>
 </html>
