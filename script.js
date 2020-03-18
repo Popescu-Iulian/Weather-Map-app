@@ -55,6 +55,21 @@ class GetWeatherData {
   }
 }
 
+class GetForecastData {
+  constructor(city) {
+    this.apiKey = '9a69dfc035a5bc26f2d310c17aecd706';
+    this.city = city;
+  }
+
+  async getLocationForecast() {
+    const FORECAST_RESPONSE = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${this.city}&appid=${this.apiKey}&units=metric`);
+
+    const FORECAST_RESPONSE_DATA = await FORECAST_RESPONSE.json();
+
+    return FORECAST_RESPONSE_DATA;
+  }
+}
+
 class DisplayWeatherData {
   constructor() {
     this.location = LOCATION;
