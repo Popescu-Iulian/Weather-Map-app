@@ -6,6 +6,7 @@ const TEMP = document.querySelector('#temperature');
 const WIND = document.querySelector('#wind');
 const LOCATION_INPUT = document.querySelector('input');
 const MAP_DIV = document.querySelector('#map');
+const FORECAST_DIV = document.querySelector('#forecast');
 
 class LocalStorage {
   constructor() {
@@ -39,7 +40,12 @@ class GetWeatherData {
 
     const WEATHER_RESPONSE_DATA = await WEATHER_RESPONSE.json();
 
-    initMap(WEATHER_RESPONSE_DATA.coord.lat, WEATHER_RESPONSE_DATA.coord.lon);
+    const COORDS = {
+      lat: WEATHER_RESPONSE_DATA.coord.lat,
+      lng: WEATHER_RESPONSE_DATA.coord.lon
+    };
+
+    initMap(COORDS);
 
     return WEATHER_RESPONSE_DATA;
   }
@@ -88,32 +94,13 @@ function getWeather() {
     .catch(err => console.error(err))
 }
 
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-function initMap(lat, lng) {
-  let location = { lat: lat, lng: lng };
-  let options = { center: location, zoom: 12 };
+function initMap(coords) {
+  const MAP_OPTIONS = {
+    center: coords,
+    zoom: 12
+  };
 
-  let map = new google.maps.Map(MAP_DIV, options);
+  return new google.maps.Map(MAP_DIV, MAP_OPTIONS);
 }
 
-// function initMap(lat, lng) {
-//   let map = new google.maps.Map(document.getElementById('map'), {
-//     center: { lat: lat, lng: lng },
-//     zoom: 8
-//   });
-// }
-
-// let lat = weather.coord.lat;
-// let lng = weather.coord.lon;
-
-
-
-// class MapCoord {
-// constructor() {
-//   this.lat,
-//     this.lng
-// }
-
-// getMapLatLng() { }
-// }
+function showWeatherForecast() { }
