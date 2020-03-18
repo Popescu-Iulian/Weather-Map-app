@@ -5,6 +5,7 @@ const HUMIDITY = document.querySelector('#humidity');
 const TEMP = document.querySelector('#temperature');
 const WIND = document.querySelector('#wind');
 const LOCATION_INPUT = document.querySelector('input');
+const MAP_DIV = document.querySelector('#map');
 
 class LocalStorage {
   constructor() {
@@ -37,6 +38,8 @@ class GetWeatherData {
     const WEATHER_RESPONSE = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&appid=${this.apiKey}&units=metric`);
 
     const WEATHER_RESPONSE_DATA = await WEATHER_RESPONSE.json();
+
+    initMap(WEATHER_RESPONSE_DATA.coord.lat, WEATHER_RESPONSE_DATA.coord.lon);
 
     return WEATHER_RESPONSE_DATA;
   }
@@ -84,3 +87,33 @@ function getWeather() {
     .then(results => DISPLAY_WEATHER.displayWeather(results))
     .catch(err => console.error(err))
 }
+
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+function initMap(lat, lng) {
+  let location = { lat: lat, lng: lng };
+  let options = { center: location, zoom: 12 };
+
+  let map = new google.maps.Map(MAP_DIV, options);
+}
+
+// function initMap(lat, lng) {
+//   let map = new google.maps.Map(document.getElementById('map'), {
+//     center: { lat: lat, lng: lng },
+//     zoom: 8
+//   });
+// }
+
+// let lat = weather.coord.lat;
+// let lng = weather.coord.lon;
+
+
+
+// class MapCoord {
+// constructor() {
+//   this.lat,
+//     this.lng
+// }
+
+// getMapLatLng() { }
+// }
