@@ -8,6 +8,12 @@ const LOCATION_INPUT = document.querySelector('input');
 const MAP_DIV = document.querySelector('#map');
 const FORECAST_DIV = document.querySelector('#forecast');
 
+let day = document.querySelector('#day');
+let day_icon = document.querySelector('#day-icon');
+let day_hour = document.querySelector('#day-hour');
+let day_temperature = document.querySelector('#day-temperature');
+let day_description = document.querySelector('#day-description');
+
 class LocalStorage {
   constructor() {
     this.city;
@@ -16,7 +22,7 @@ class LocalStorage {
   getLocationData() {
     if (localStorage.getItem('city') === null) {
       this.city = 'Bucharest';
-      // poate ii dai valoarea din geolocalizare (nested if)
+      // poate ii dai valoarea din geolocalizare
     } else {
       this.city = localStorage.getItem('city');
     }
@@ -68,16 +74,20 @@ class GetForecastData {
 
     return FORECAST_RESPONSE_DATA;
   }
+
+  changeLocation(city) {
+    this.city = city;
+  }
 }
 
 class DisplayWeatherData {
-  constructor() {
-    this.location = LOCATION;
-    this.details = DESCRIPTION;
-    this.icon = ICON;
-    this.humidity = HUMIDITY;
-    this.temperature = TEMP;
-    this.wind = WIND;
+  constructor(location, details, icon, humidity, temperature, wind) {
+    this.location = location;
+    this.details = details;
+    this.icon = icon;
+    this.humidity = humidity;
+    this.temperature = temperature;
+    this.wind = wind;
   }
 
   displayWeather(weather) {
@@ -90,10 +100,31 @@ class DisplayWeatherData {
   }
 }
 
+class DisplayForecastData {
+  constructor(day, icon, hour, temperature, description) {
+    this.day = day;
+    this.day_icon = icon;
+    this.day_hour = hour;
+    this.day_temperature = temperature;
+    this.day_description = description;
+  }
+
+  displayForecast(weather) {
+    this.day.textContent = weather.list[0].dt_txt;
+    this.day_icon.setAttribute('src', `http://openweathermap.org/img/wn/${weather.list[0].weather[0].icon}@2x.png`);
+    this.day_hour.textContent = `Hour: ${weather.list[0].dt_txt}`;
+    this.day_temperature.textContent = `Temperature: ${weather.list[0].main.temp}`;
+    this.day_description.textContent = `Sumary: ${weather.list[0].weather[0].description}`;
+  }
+}
+
 const LOCAL_STORAGE = new LocalStorage();
 const USER_LOCATION = LOCAL_STORAGE.getLocationData();
 const LOCATION_WEATHER = new GetWeatherData(USER_LOCATION);
-const DISPLAY_WEATHER = new DisplayWeatherData();
+const DISPLAY_WEATHER = new DisplayWeatherData(LOCATION, DESCRIPTION, ICON, HUMIDITY, TEMP, WIND);
+
+let location_forecast = new GetForecastData(USER_LOCATION);
+let display_forecast = new DisplayForecastData(day, day_icon, day_hour, day_temperature, day_description);
 
 function changeUserLocation() {
   LOCATION_WEATHER.changeLocation(LOCATION_INPUT.value);
@@ -103,9 +134,26 @@ function changeUserLocation() {
   getWeather();
 }
 
+function showWeatherForecast(event) {
+  event.stopPropagation();
+
+  location_forecast.changeLocation(LOCATION_INPUT.value);
+
+  LOCAL_STORAGE.setLocationData(LOCATION_INPUT.value);
+
+  getForecast();
+}
+
 function getWeather() {
   LOCATION_WEATHER.getLocationWeather()
     .then(results => DISPLAY_WEATHER.displayWeather(results))
+    .catch(err => console.error(err))
+}
+
+function getForecast() {
+
+  location_forecast.getLocationForecast()
+    .then(results => display_forecast.displayForecast(results))
     .catch(err => console.error(err))
 }
 
@@ -117,5 +165,3 @@ function initMap(coords) {
 
   return new google.maps.Map(MAP_DIV, MAP_OPTIONS);
 }
-
-function showWeatherForecast() { }
