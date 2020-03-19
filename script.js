@@ -134,12 +134,12 @@ function changeUserLocation() {
   getWeather();
 }
 
-function showWeatherForecast(event) {
-  event.stopPropagation();
-
+function showWeatherForecast() {
   location_forecast.changeLocation(LOCATION_INPUT.value);
 
   LOCAL_STORAGE.setLocationData(LOCATION_INPUT.value);
+
+  changeUserLocation()
 
   getForecast();
 }
@@ -151,7 +151,6 @@ function getWeather() {
 }
 
 function getForecast() {
-
   location_forecast.getLocationForecast()
     .then(results => display_forecast.displayForecast(results))
     .catch(err => console.error(err))
