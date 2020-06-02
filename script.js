@@ -8,11 +8,11 @@ const LOCATION_INPUT = document.querySelector('input');
 const MAP_DIV = document.querySelector('#map');
 const FORECAST_DIV = document.querySelector('#forecast');
 
-// let day = document.querySelector('#day');
-// let day_icon = document.querySelector('#day-icon');
-// let day_hour = document.querySelector('#day-hour');
-// let day_temperature = document.querySelector('#day-temperature');
-// let day_description = document.querySelector('#day-description');
+let day = document.querySelector('#day');
+let day_icon = document.querySelector('#day-icon');
+let day_hour = document.querySelector('#day-hour');
+let day_temperature = document.querySelector('#day-temperature');
+let day_description = document.querySelector('#day-description');
 
 class LocalStorage {
 	constructor() {
@@ -117,19 +117,19 @@ class DisplayForecastData {
 	}
 
 	displayForecast(weather) {
-		let ceva;
+		let forecast_infos = '';
 
 		for (let i = 0; i < weather.list.length; i++) {
-			ceva = `
+			forecast_infos += `
         <p>${weather.list[i].dt_txt}</p>
-        <img src=${'http://openweathermap.org/img/wn/${weather.list[i].weather[0].icon}@2x.png'}/>
+        <img src="http://openweathermap.org/img/wn/${weather.list[i].weather[0].icon}@2x.png" />
         <p>Hour: ${weather.list[i].dt_txt}</p>
         <p>Temperature: ${weather.list[i].main.temp}</p>
         <p>Sumary: ${weather.list[i].weather[0].description}</p>
       `;
 		}
 
-		FORECAST_DIV.appendChild(ceva);
+		FORECAST_DIV.innerHTML = forecast_infos;
 
 		// this.day.textContent = weather.list[0].dt_txt;
 		// this.day_icon.setAttribute(
@@ -202,3 +202,5 @@ function initMap(coords) {
 
 	return new google.maps.Map(MAP_DIV, MAP_OPTIONS);
 }
+
+// https://api.openweathermap.org/data/2.5/forecast?q=iasi&appid=9a69dfc035a5bc26f2d310c17aecd706&units=metric
