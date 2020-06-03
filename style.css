@@ -3,3 +3,13 @@
 	width: 80vw;
 	height: 400px;
 }
+
+#forecast {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#flex-items {
+	margin: 15px;
+	text-align: center;
+}
