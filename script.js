@@ -8,11 +8,11 @@ const LOCATION_INPUT = document.querySelector('input');
 const MAP_DIV = document.querySelector('#map');
 const FORECAST_DIV = document.querySelector('#forecast');
 
-let day = document.querySelector('#day');
-let day_icon = document.querySelector('#day-icon');
-let day_hour = document.querySelector('#day-hour');
-let day_temperature = document.querySelector('#day-temperature');
-let day_description = document.querySelector('#day-description');
+let day = document.querySelector('.day');
+let day_icon = document.querySelector('.day-icon');
+let day_hour = document.querySelector('.day-hour');
+let day_temperature = document.querySelector('.day-temperature');
+let day_description = document.querySelector('.day-description');
 
 class LocalStorage {
 	constructor() {
@@ -121,12 +121,12 @@ class DisplayForecastData {
 
 		for (let i = 0; i < weather.list.length; i++) {
 			forecast_infos += `
-        <p>${weather.list[i].dt_txt}</p>
-        <img src="http://openweathermap.org/img/wn/${weather.list[i].weather[0].icon}@2x.png" />
-        <p>Hour: ${weather.list[i].dt_txt}</p>
-        <p>Temperature: ${weather.list[i].main.temp}</p>
-        <p>Sumary: ${weather.list[i].weather[0].description}</p>
-      `;
+		    <p class="day">${weather.list[i].dt_txt}</p>
+		    <img class="day-icon" src="http://openweathermap.org/img/wn/${weather.list[i].weather[0].icon}@2x.png" />
+		    <p class="day-hour">Hour: ${weather.list[i].dt_txt}</p>
+		    <p class="day-temperature">Temperature: ${weather.list[i].main.temp}</p>
+		    <p class="day-description">Sumary: ${weather.list[i].weather[0].description}</p>
+		  `;
 		}
 
 		FORECAST_DIV.innerHTML = forecast_infos;
