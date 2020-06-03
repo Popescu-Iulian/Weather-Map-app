@@ -107,11 +107,15 @@ class DisplayForecastData {
 
 		for (let i = 0; i < weather.list.length; i++) {
 			forecast_infos += `
-		    <p class="day">${weather.list[i].dt_txt}</p>
-		    <img class="day-icon" src="http://openweathermap.org/img/wn/${weather.list[i].weather[0].icon}@2x.png" />
-		    <p class="day-hour">Hour: ${weather.list[i].dt_txt}</p>
+		    <p class="day">${weather.list[i].dt_txt.substring(0, 10)}</p>
+		    <img class="day-icon" src="http://openweathermap.org/img/wn/${
+					weather.list[i].weather[0].icon
+				}@2x.png" />
+		    <p class="day-hour">Hour: ${weather.list[i].dt_txt.substring(10, 16)}</p>
 		    <p class="day-temperature">Temperature: ${weather.list[i].main.temp}</p>
-		    <p class="day-description">Sumary: ${weather.list[i].weather[0].description}</p>
+				<p class="day-description">Sumary: ${weather.list[i].weather[0].description}</p>
+				<br />
+				<br />
 		  `;
 		}
 
