@@ -12,14 +12,17 @@
 </head>
 
 <body onload="getWeather()">
-	<h4 id="location"></h4>
-	<img id="icon" alt="today weather picture" />
-	<p id="description"></p>
+	<div id="today-weather">
+		<h4 id="location"></h4>
+		<img id="icon" alt="today weather picture" />
+		<p id="description"></p>
+		<br />
+		<p id="humidity"></p>
+		<p id="temperature"></p>
+		<p id="wind"></p>
+	</div>
 	<br />
-	<p id="humidity"></p>
-	<p id="temperature"></p>
-	<p id="wind"></p>
-	<input type="text" />
+	<input type="text" placeholder="Enter city..." />
 	<button onclick="changeUserLocation()">Show weather</button>
 	<button onclick="showWeatherForecast()">Show forecast</button>
 	<br />
